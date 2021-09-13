@@ -24,8 +24,8 @@
 import { Editor, Viewer } from '@bytemd/vue'
 import highlight from '@bytemd/plugin-highlight'
 import math from '@bytemd/plugin-math'
-// import mermaid from '@bytemd/plugin-mermaid';
-import { markdownText } from '@bytemd-examples/utils'
+import mermaid from '@bytemd/plugin-mermaid'
+import { markdownText } from '../test'
 
 export default {
   components: {
@@ -47,7 +47,7 @@ export default {
       return [
         this.enabled.highlight && highlight(),
         this.enabled.math && math(),
-        // mermaid: enabled.mermaid && mermaid(),
+        this.enabled.mermaid && mermaid(),
       ]
     },
   },

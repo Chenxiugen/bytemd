@@ -9,7 +9,6 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@bytemd-examples/utils": "latest",
     "@bytemd/plugin-breaks": "latest",
     "@bytemd/plugin-footnotes": "latest",
     "@bytemd/plugin-frontmatter": "latest",
@@ -22,6 +21,7 @@
     "@bytemd/plugin-medium-zoom": "latest",
     "@bytemd/plugin-mermaid": "latest",
     "@bytemd/vue": "latest",
+    "github-markdown-css": "^4.0.0",
     "nuxt": "^2.15.7"
   }
 }
