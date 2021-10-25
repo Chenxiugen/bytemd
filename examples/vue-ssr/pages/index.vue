@@ -62,7 +62,7 @@ export default {
         show: false,
         text: '自动保存',
         timer: null,
-        limit: 1000,
+        limit: 2000,
       },
     }
   },
