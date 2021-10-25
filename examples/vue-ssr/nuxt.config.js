@@ -25,7 +25,6 @@ export default {
    ** Global CSS
    */
   css: [
-    'github-markdown-css',
     'highlight.js/styles/vs.css',
     'katex/dist/katex.css',
     'bytemd/dist/index.css',

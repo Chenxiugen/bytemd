@@ -13,8 +13,9 @@
         </label>
       </div>
       <div class="function-btns">
-        <span class="btn" @click="submitGit">提交</span>
-        <span class="btn" @click="saveLocal">保存草稿</span>
+        <span class="tips" :class="tips.show && 'show'">{{ tips.text }}</span>
+        <!-- <span class="btn" @click="submitGit">提交</span>
+        <span class="btn" @click="saveLocal">保存草稿</span> -->
       </div>
     </div>
 
@@ -22,7 +23,7 @@
       <Editor
         class="editor-content"
         :value="value"
-        @change="handleChange"
+        @change="autoSave"
         :plugins="enabledPlugins"
         :toolbarItems="[]"
       />
@@ -56,6 +57,13 @@ export default {
         gemoji: true,
         GFM: true,
       },
+      saveTimer: null,
+      tips: {
+        show: false,
+        text: '自动保存',
+        timer: null,
+        limit: 1000,
+      },
     }
   },
   mounted() {
@@ -75,8 +83,11 @@ export default {
     },
   },
   methods: {
-    handleChange(v) {
+    /** 自动保存本地 */
+    autoSave(v) {
       this.value = v
+      this.saveTimer && clearTimeout(this.saveTimer)
+      this.saveTimer = setTimeout(this.saveLocal, 1000)
     },
     handlePluginChange($event, p) {
       this.enabled[p] = $event.target.checked
@@ -90,7 +101,7 @@ export default {
             data: this.value,
           })
         )
-      alert('保存成功')
+      this.showTips()
     },
     /** 获取草稿 */
     getLocalDraft() {
@@ -104,6 +115,15 @@ export default {
     /** 提交git TODO */
     submitGit() {
       alert('待实现')
+    },
+    /** 限时提示信息 */
+    showTips(text) {
+      this.tips.text = text || '保存草稿...'
+      this.tips.show = true
+      this.tips.timer && clearTimeout(this.tips.timer)
+      this.tips.timer = setTimeout(() => {
+        this.tips.show = false
+      }, this.tips.limit)
     },
   },
 }
@@ -150,11 +170,28 @@ body {
 .plugin-box {
   align-self: center;
 }
+.tips {
+  opacity: 0;
+  font-size: 14px;
+  color: #333333;
+}
+.tips.show {
+  animation: tips-show 1s alternate-reverse ease;
+}
 .function-btns .btn {
   display: inline-block;
   height: 24px;
   padding: 0 10px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+@keyframes tips-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
